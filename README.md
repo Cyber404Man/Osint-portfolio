@@ -8,9 +8,8 @@
 ---
 
 ### 📄 Links
-- [📄 Full Report PDF (4 Pages)](./reports/OSINT_Training_Report_Mohanad_Issa.pdf)
-- [📊 Presentation (6 Slides)](./presentation/OSINT_Training_Report_Mohanad_Issa_Presentation.pptx)
-- [🗺️ Live Web Report](https://github.com/YOUR_USERNAME/osint-portfolio) <!-- Replace after upload -->
+- [📄 Full Report PDF (4 Pages)](https://drive.google.com/drive/folders/1qouKrWfSL-jvJCJ9n71yWyiRXs2d_avR?usp=sharing)
+
 
 ---
 
@@ -121,16 +120,10 @@ This report follows professional OSINT tradecraft:
 Aspiring CTI / OSINT Analyst
 Ready for: SOC Analyst, Threat Intel Analyst, OSINT Analyst (Remote)
 
-- LinkedIn: [Add your LinkedIn link]
-- Email: [Add your email]
+- LinkedIn: https://www.linkedin.com/in/mohanad-issa-a65801256
+  
 
 ---
 
-### 📝 How to Use This Portfolio
-
-This repository is designed for recruiters and hiring managers to evaluate OSINT tradecraft. 
-- For CV: Add link to this GitHub repo under Projects
-- For LinkedIn: Add PDF report to Featured section
-- For Interview: Use presentation to walk through methodology
 
 **License:** For portfolio demonstration only. All vessel data simulated/redacted.
