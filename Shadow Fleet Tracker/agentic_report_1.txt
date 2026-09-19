@@ -1,0 +1,21 @@
+UNCLASSIFIED // OSINT - GOVERNED AI REPORT
+Generated: 2026-09-19T08:34:15.387735
+Platform: Agentic Risk Intelligence v1.0
+
+VESSEL: CLEAROCEAN MERIBEL IMO 9917646
+FINAL RISK: 100/100 | CONFIDENCE: 85%
+
+FINDING: Probable shadow fleet STS
+LOCATION: 35.384N 15.655E
+
+EVIDENCE (Governed):
+  - LOITERING: stationary at 0.8 knots
+  - FOR ORDERS destination: FOR ORDERS
+  - Draught jump 6.6m
+  - SAR confirmed at {'lat': 35.384, 'lon': 15.655}
+
+SAR CORRELATION: {'imo': 9917646, 'name': 'CLEAROCEAN MERIBEL', 'sar_confirmed': True, 'sar_position': {'lat': 35.384, 'lon': 15.655}, 'dark_target': False, 'confidence': 0.92}
+
+RECOMMENDATION: Flag for compliance, add to watchlist, notify authorities.
+
+AUDIT LOG:

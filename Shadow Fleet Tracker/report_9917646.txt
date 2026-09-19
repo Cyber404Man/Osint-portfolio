@@ -1,0 +1,25 @@
+UNCLASSIFIED // OSINT
+INTELLIGENCE REPORT - DARK STS DETECTION
+Date: 2026-09-19
+Location: SE Malta 35-23N 015-39E
+Confidence: HIGH
+
+1. SUMMARY:
+Vessel CLEAROCEAN MERIBEL (IMO 9917646) detected with HIGH risk indicators consistent with shadow fleet operations.
+
+2. INDICATORS:
+   - Loitering detected: vessel CLEAROCEAN MERIBEL stationary at 0.8 knots - probable STS   - Suspicious destination: FOR ORDERS - legitimate vessels list port name   - Critical draught jump: from 5.2m to 11.8m (delta 6.6m) = loaded oil at sea
+3. SAR CORRELATION:
+   Sentinel-1 SAR image confirms two vessels in close proximity (<0.5km) at reported AIS position.
+   No AIS gap observed but loitering pattern confirms probable STS.
+
+4. ASSESSMENT:
+   Vessel likely conducting undeclared Ship-to-Ship transfer to evade sanctions monitoring.
+   Pattern matches known Libyan STS corridor.
+
+5. RECOMMENDATION:
+   Flag for compliance team, notify Maltese authorities, add to watchlist.
+
+Risk Score: 100/100
+Governed AI Audit: Agent1 v1.0, Agent2 v1.0, timestamp 2026-09-19T07:37:26.470344
+Classification: UNCLASSIFIED - Public AIS and Open SAR data only
