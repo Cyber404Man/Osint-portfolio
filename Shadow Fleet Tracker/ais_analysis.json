@@ -1,0 +1,27 @@
+[
+  {
+    "name": "CLEAROCEAN MERIBEL",
+    "imo": 9917646,
+    "risk_score": 100,
+    "reasons": [
+      "Loitering detected: vessel CLEAROCEAN MERIBEL stationary at 0.8 knots - probable STS",
+      "Suspicious destination: FOR ORDERS - legitimate vessels list port name",
+      "Critical draught jump: from 5.2m to 11.8m (delta 6.6m) = loaded oil at sea"
+    ]
+  },
+  {
+    "name": "GEA",
+    "imo": 9292591,
+    "risk_score": 70,
+    "reasons": [
+      "Loitering detected: vessel GEA stationary at 0.5 knots - probable STS",
+      "Suspicious destination: FOR ORDERS - legitimate vessels list port name"
+    ]
+  },
+  {
+    "name": "NORMAL TANKER",
+    "imo": 1234567,
+    "risk_score": 0,
+    "reasons": []
+  }
+]
