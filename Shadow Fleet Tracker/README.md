@@ -14,7 +14,7 @@ A multi-agent platform that detects shadow fleet STS operations (ship-to-ship oi
 - **Governed AI Agents:** 3 agents with full audit log (timestamp, confidence, details)
 - **Insights Investigator:** Fuses evidence and generates decision-ready UNCLASS reports
 
-This matches the exact spec from Upwork client: "combines global data, governed AI agents, and Insights Investigator to deliver decision-ready intelligence at mission speed"
+Independent portfolio demonstration : "combines global data, governed AI agents, and Insights Investigator to deliver decision-ready intelligence at mission speed"
 
 And aligns with Airbus Defence and Space OceanFinder methodology.
 
