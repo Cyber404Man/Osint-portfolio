@@ -93,9 +93,9 @@ Output:
 This is the exact architecture the Upwork client asked for:
 "combines global data, governed AI agents, and Insights Investigator"
 
-### What to show the client:
+### Output:
 1. Show audit_log.json -> proves governed AI
 2. Show final report -> proves decision-ready intelligence
 3. Show InvestigationState -> proves global data fusion
 
-Next: Add real Sentinel-1 API and MarineTraffic API to replace mock data.
+Next: You can Add real Sentinel-1 API and MarineTraffic API to replace mock data.
