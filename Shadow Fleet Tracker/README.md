@@ -1,101 +1,164 @@
 # Shadow Fleet Tracker - Agentic Risk Intelligence Platform
-Author: Mohanad Issa | OSINT / Maritime Intelligence
-Portfolio Project #3 - Airbus OceanFinder Methodology
+### OSINT Portfolio Project 3 | By Mohanad Issa
 
-## Overview
-This project builds a mini version of the Agentic Risk Intelligence Platform requested by the Upwork client.
-It combines: Global Data + Governed AI Agents + Insights Investigator to deliver decision-ready intelligence at mission speed.
+> **Live Demo:** `streamlit run app.py`
+> **Status:** v2.0 Agentic Platform Complete - Governed AI Enabled
 
-## Glossary - Every Term Explained
+[Architecture](architecture.png)
 
-**AIS (Automatic Identification System):** GPS-like device every large vessel must broadcast. Sends every minute: who I am, where I am, where I am going, cargo status. Legally required.
+## What is this?
 
-**IMO Number:** Unique 7-digit vessel ID, never changes even if name or flag changes. Like passport number. Example: MERIBEL IMO 9917646
+A multi-agent platform that detects shadow fleet STS operations (ship-to-ship oil transfers) SE Malta, combining:
 
-**MMSI:** ID of the AIS device itself.
+- **Global Data:** AIS (MarineTraffic) + SAR Satellite (Sentinel-1 Copernicus) + Sanctions Lists
+- **Governed AI Agents:** 3 agents with full audit log (timestamp, confidence, details)
+- **Insights Investigator:** Fuses evidence and generates decision-ready UNCLASS reports
 
-**Draught / Draft:** How deep vessel sits in water. Empty = 5m, fully loaded with oil = 12m. Sudden jump from 5m to 12m in open sea = loaded oil via illegal STS.
+This matches the exact spec from Upwork client: "combines global data, governed AI agents, and Insights Investigator to deliver decision-ready intelligence at mission speed"
 
-**LOITERING:** Vessel moving <1 knot or stationary in open sea for >6 hours without nearby port. 90% probability it is doing STS (Ship-to-Ship Transfer).
+And aligns with Airbus Defence and Space OceanFinder methodology.
 
-**FOR ORDERS:** Captain writes destination as "FOR ORDERS" meaning "waiting for smuggler instructions". Normal vessels write "Rotterdam". FOR ORDERS is classic shadow fleet indicator.
+## Quick Start (3 minutes)
 
-**SAR (Synthetic Aperture Radar):** Satellite radar imaging. Sees through clouds, at night, in storms. Vessels cannot hide from SAR even if they turn off AIS. White dots on SAR image = ships.
+```bash
+# 1. Clone
+git clone https://github.com/Cyber404Man/Osint-portfolio
+cd Osint-portfolio/Shadow\ Fleet\ Tracker
 
-**Dark Target:** Target seen on SAR image but NOT on AIS map = vessel turned off its device intentionally = strong evidence of illicit activity. Core of Airbus OceanFinder.
+# 2. Install
+pip install -r requirements.txt
 
-**STS (Ship-to-Ship Transfer):** Moving cargo from one ship to another in open sea. Can be legal or illegal (to hide oil origin).
+# 3. Run Agentic Workflow (Mock mode works without credentials)
+python agents/agentic_workflow_detailed.py
 
-**Shadow Fleet / Dark Fleet:** 600+ old tankers bought by Russia/Iran via shell companies to evade sanctions. Age >20 years, no insurance.
+# 4. Run Real SAR API (optional - needs free Copernicus account)
+cp .env.example .env
+# Edit .env with your Copernicus email/password
+python agents/sar_real_api.py
 
-**Agentic Workflow:** Not a simple chatbot. An Agent has a goal and plans by itself. Example: Tell agent "find smuggling vessel near Malta" and it will: query MarineTraffic, check if AIS off, fetch Sentinel-1 image, compare, write report.
+# 5. Launch Dashboard
+streamlit run app.py
+```
 
-**Multi-Agent System:** 3 specialized agents working together via LangGraph.
+## Architecture - LangGraph Pattern
 
-**Governed AI:** Every AI action is logged: who saw what vessel, when, confidence level. Audit log for compliance. Critical for Risk Intelligence platforms.
+```
+Global Data (AIS + SAR + News)
+        |
+        v
+[AIS Hunter Node] -> Risk Score 0-100, detects loitering, FOR ORDERS, draught jump
+        |               logs to audit_log
+        v
+[SAR Verifier Node] -> Confirms with Sentinel-1 radar, detects dark targets
+        |               logs to audit_log
+        v
+[Investigator Node] -> Fuses AIS+SAR, calculates confidence, generates UNCLASS report
+        |               includes audit trail
+        v
+Decision-Ready Intelligence + Governed Audit Log
+```
 
-**Knowledge Graph (Neo4j):** Stores relationships, not just rows. Example: Vessel X owned by Company Y -> Company Y under sanctions -> Company Y sent 5 vessels to Libya -> Vessel X suspicious. AI understands connections.
-
-**Decision-Ready Intelligence:** Instead of 1000 lines of raw data, give client one sentence: "85% probability vessel MERIBEL is smuggling off Malta, evidence is SAR image dated X, recommended action: notify Maltese authorities."
-
-**Mission Speed:** Deliver intelligence in minutes, not days.
-
-## Architecture
-
-[Global Data: AIS + SAR + News + Sanctions] 
-   -> Agent 1: AIS Hunter (detects loitering, FOR ORDERS, draught jump)
-   -> Agent 2: SAR Verifier (compares AIS vs SAR, finds dark targets)
-   -> Agent 3: Insights Investigator (builds graph + writes UNCLASS report)
+**State:** InvestigationState (shared memory)
+**Nodes:** 3 agents
+**Edges:** AIS -> SAR -> Investigator
+**Governed:** log_audit() every action
 
 ## Project Structure
-- agents/ais_hunter.py : Detect loitering and draught anomalies, calculates risk score 0-100
-- agents/sar_verifier.py : Compare AIS positions with SAR detections
-- agents/investigator.py : Generate final intelligence report
-- data/sample_ais.json : Sample data from real suspicious vessels SE Malta
-- data/ais_analysis.json : Output of Agent 1
-- reports/ : Final UNCLASS reports
 
-## How to Run
-python agents/ais_hunter.py
-python agents/sar_verifier.py
-python agents/investigator.py
-
-## Next Step: Upgrade to Real Agentic Platform
-- Replace mock SAR with Sentinel Hub API
-- Replace mock AIS with MarineTraffic API
-- Orchestrate with LangGraph
-- Store relationships in Neo4j
-- Add audit logging
-
-This project is UNCLASS // OSINT only, uses public data.
-
-
-## STEP 2: Agentic Version (NEW)
-
-We upgraded from simple scripts to a true Agentic Platform using LangGraph pattern.
-
-### What is LangGraph?
-- StateGraph: shared memory (InvestigationState)
-- Nodes: each agent is a node (ais_hunter_node, sar_verifier_node, investigator_node)
-- Edges: agents talk in sequence
-- Governed: every action logged in audit_log
-
-### How to run agentic version:
 ```
-pip install -r requirements.txt
-python agents/agentic_workflow.py
+Shadow Fleet Tracker/
+├── app.py                              # Streamlit live dashboard
+├── agents/
+│   ├── ais_hunter.py                   # Agent 1 - Simple version
+│   ├── sar_verifier.py                 # Agent 2 - Simple version
+│   ├── investigator.py                 # Agent 3 - Simple version
+│   ├── agentic_workflow.py             # Agentic v2 - Short version
+│   ├── agentic_workflow_detailed.py    # Agentic v2 - Detailed with comments
+│   └── sar_real_api.py                 # Real Sentinel-1 Copernicus integration
+├── data/
+│   ├── sample_ais.json                 # Input vessels (MERIBEL, GEA)
+│   ├── ais_analysis.json               # Agent 1 output
+│   ├── sar_real_analysis.json          # Agent 2 output (real + mock)
+│   └── governed_audit_log.json         # Governed AI audit trail
+├── reports/
+│   ├── report_9917646.txt              # Simple report
+│   └── agentic_report_9917646.txt      # Decision-ready report with audit
+├── .env.example                        # Template for credentials
+├── .gitignore                          # Blocks .env
+├── requirements.txt
+└── README.md
 ```
 
-Output:
-- data/governed_audit_log.json -> Full audit trail for compliance
-- reports/agentic_report_*.txt -> Decision-ready intelligence reports
+## Agents Explained
 
-This is the exact architecture the Upwork client asked for:
-"combines global data, governed AI agents, and Insights Investigator"
+### Agent 1: AIS Hunter
+- **Detects:** Loitering (<1 knot), FOR ORDERS destination, Draught jump >3m
+- **Physics:** Draught 5m empty, 12m full, jump at sea = loaded illegally
+- **Output:** Risk score 0-100
+- **Audit:** Logs every vessel analyzed
 
-### Output:
-1. Show audit_log.json -> proves governed AI
-2. Show final report -> proves decision-ready intelligence
-3. Show InvestigationState -> proves global data fusion
+### Agent 2: SAR Verifier
+- **What is SAR?** Synthetic Aperture Radar - sees at night, through clouds, ships are bright
+- **Real API:** Copernicus Dataspace OData API, Sentinel-1 GRD product, polygon search
+- **Detects:** SAR confirms AIS, or Dark Target (SAR sees ship, AIS doesn't = hiding)
+- **Resilient:** Works in REAL mode with credentials, auto fallback to MOCK for CI/CD
+- **Audit:** Logs every SAR detection with image ID
 
-Next: You can Add real Sentinel-1 API and MarineTraffic API to replace mock data.
+### Agent 3: Insights Investigator
+- **Fuses:** AIS + SAR + Audit log
+- **Generates:** UNCLASS intelligence report with Executive Summary, Indicators, SAR Correlation, Audit Trail, Recommendation
+- **Decision-ready:** Client can act immediately
+
+## Governed AI - Why it matters
+
+Without audit log: "AI says ship is smuggling" -> not trustworthy
+With audit log:
+```
+[2026-09-16T08:30:00] AIS_Hunter: Analyzed MERIBEL - Risk 100 - LOITERING
+[2026-09-16T08:31:00] SAR_Verifier: SAR confirmed at 35.384,15.655 brightness 245
+[2026-09-16T08:32:00] Investigator: Generated report - Confidence 85%
+```
+-> Full traceability for compliance, court, sanctions.
+
+## Results
+
+- Detected: CLEAROCEAN MERIBEL IMO 9917646 + GEA IMO 9292591
+- Location: SE Malta 35.38N 15.65E
+- Pattern: Libyan STS corridor, loitering, FOR ORDERS
+- Confidence: 85% (AIS + SAR confirmed)
+- Reports: reports/agentic_report_*.txt
+- Audit: data/governed_audit_log.json
+
+## For Airbus Interview
+
+Q: What is Agentic?
+A: Multi-agent system using LangGraph pattern with 3 nodes sharing InvestigationState, each logs to audit log for governance. Methodology aligns with OceanFinder STS detection but adds governed AI.
+
+Q: Have you worked with satellite imagery?
+A: Yes, integrated Copernicus Dataspace API to fetch Sentinel-1 GRD for SE Malta AOI, using OData polygon search and OpenID token auth, detects ships by radar brightness.
+
+## For Upwork Client
+
+This repo is a working demo of your spec:
+- Global data: MarineTraffic + Sentinel-1 + News (mock + real)
+- Governed AI agents: 3 agents + audit_log.json
+- Insights Investigator: investigator_node()
+- Decision-ready: UNCLASS reports with recommendation
+
+Deploy dashboard free: streamlit cloud, share link with client.
+
+## Deployment
+
+Streamlit Cloud (free):
+1. Push to GitHub
+2. Go to share.streamlit.io, connect repo, select app.py
+3. Live demo link ready to send to client
+
+## License
+
+UNCLASS // OSINT - Public data only (AIS + Open SAR)
+All analysis uses open sources, no classified data.
+
+Author: Mohanad Issa - Aspiring Intelligence Analyst
+GitHub: Cyber404Man
+Location: Gaza, EMEA GMT+3
